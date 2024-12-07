@@ -1,5 +1,7 @@
 const { db } = require('../config/firebase');
 const { bucket } = require('../config/storage');
+const { Firestore } = require('@google-cloud/firestore');
+const firestore = new Firestore();
 
 async function saveToFirestore(predictionData) {
     try {
@@ -46,4 +48,29 @@ async function getAllModelsFromStorage() {
     }
 }
 
-module.exports = { saveToFirestore, getModelFromStorage };
+async function getAllPredictions() {
+    try {
+        const predictionsRef = firestore.collection('prediction');
+        const snapshot = await predictionsRef.get();
+        
+        const predictions = [];
+        snapshot.forEach(doc => {
+            predictions.push({
+                id: doc.id,
+                history: {
+                    result: doc.data().result,
+                    createdAt: doc.data().createdAt,
+                    suggestion: doc.data().suggestion,
+                    id: doc.id
+                }
+            });
+        });
+        
+        return predictions;
+    } catch (error) {
+        console.error('Error getting predictions:', error);
+        throw error;
+    }
+}
+
+module.exports = { saveToFirestore, getModelFromStorage, getAllPredictions };

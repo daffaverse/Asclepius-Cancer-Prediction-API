@@ -30,6 +30,7 @@ const init = async () => {
     // Routes
     server.route(require('./handlers/predictionHandler'));
     server.route(require('./handlers/healthHandler'));
+    server.route(require('./handlers/historyHandler'));
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
