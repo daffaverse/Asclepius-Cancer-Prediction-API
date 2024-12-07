@@ -6,9 +6,12 @@ require('dotenv').config();
 const { loadModel } = require('./src/models/modelLoader');
 
 const init = async () => {
+    const port = process.env.PORT || 8080;
+    const host = '0.0.0.0';
+
     const server = Hapi.server({
-        port: process.env.PORT || 8000,
-        host: 'localhost',
+        port: port,
+        host: host,
         routes: {
             cors: true,
             files: {

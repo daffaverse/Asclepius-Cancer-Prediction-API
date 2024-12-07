@@ -1,0 +1,28 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/submissionmlgc-haidar-dzaky/submission-ml', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/submissionmlgc-haidar-dzaky/submission-ml']
+  
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'submission-ml'
+      - '--image'
+      - 'gcr.io/submissionmlgc-haidar-dzaky/submission-ml'
+      - '--region'
+      - 'asia-southeast2'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'GOOGLE_CLOUD_PROJECT_ID=submissionmlgc-haidar-dzaky,GOOGLE_CLOUD_BUCKET_NAME=model-data-daffaverse'
+
+images:
+  - 'gcr.io/submissionmlgc-haidar-dzaky/submission-ml'
