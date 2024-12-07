@@ -1,23 +1,30 @@
-# Gunakan image Node.js sebagai base image
+# Gunakan Node.js versi LTS
 FROM node:18-slim
 
-# Set direktori kerja di dalam container
+# Install dependencies untuk TensorFlow.js dan Sharp
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
 WORKDIR /app
 
-# Salin package.json dan package-lock.json ke dalam container
+# Copy package files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Salin semua file ke dalam container
+# Copy source code
 COPY . .
 
-ENV NODE_ENV=production
-ENV PORT=8080
+# Copy GCP credentials
+COPY config/gcp-key.json ./config/
 
-# Expose port yang akan digunakan
+# Expose port
 EXPOSE 8080
 
-# Perintah untuk menjalankan aplikasi
-CMD ["node", "server.js"]
+# Start the application
+CMD ["npm", "start"]

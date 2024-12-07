@@ -1,0 +1,7 @@
+ steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/submissionmlgc-haidar-dzaky/cancer-detection-api', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/submissionmlgc-haidar-dzaky/cancer-detection-api']
+images:
+  - 'gcr.io/submissionmlgc-haidar-dzaky/cancer-detection-api'

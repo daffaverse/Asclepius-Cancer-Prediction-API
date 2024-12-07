@@ -34,4 +34,16 @@ async function getModelFromStorage() {
     }
 }
 
+async function getAllModelsFromStorage() {
+    try {
+        const [files] = await bucket.getFiles({ prefix: 'model/' }); // Mengambil semua file dengan prefix 'model/'
+        
+        const modelPaths = files.map(file => `gs://${process.env.GOOGLE_CLOUD_BUCKET_NAME}/${file.name}`);
+        return modelPaths; // Mengembalikan array dari semua model paths
+    } catch (error) {
+        console.error('Error accessing models from storage:', error);
+        throw error;
+    }
+}
+
 module.exports = { saveToFirestore, getModelFromStorage };

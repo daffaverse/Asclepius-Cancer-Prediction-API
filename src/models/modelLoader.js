@@ -4,8 +4,9 @@ let model;
 
 async function loadModel() {
     try {
-        model = await tf.loadGraphModel('file://./src/model/model.json');
-        console.log('Model loaded successfully');
+        const modelPath = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_BUCKET_NAME}/model/model.json`;
+        model = await tf.loadGraphModel(modelPath);
+        console.log('Model loaded successfully from Cloud Storage');
         return model;
     } catch (error) {
         console.error('Error loading model:', error);
