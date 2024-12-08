@@ -1,0 +1,6 @@
+{  
+ "backend-service-url": "https://cancer-detection-api-836679311803.us-central1.run.app",
+ "frontend-service-url": "https://submissionmlgc-haidar-dzaky.et.r.appspot.com",
+ "project-id": "submissionmlgc-haidar-dzaky",
+ "bucket-name": "model-data-daffaverse"
+}

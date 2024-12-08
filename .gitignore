@@ -5,3 +5,5 @@ uploads/*
 *.log
 coverage/
 .DS_Store
+ml-submission.zip
+*.zip

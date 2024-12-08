@@ -5,7 +5,7 @@ const firestore = new Firestore();
 
 async function saveToFirestore(predictionData) {
     try {
-        const docRef = db.collection('prediction').doc(predictionData.id);
+        const docRef = db.collection('predictions').doc(predictionData.id);
         await docRef.set({
             id: predictionData.id,
             result: predictionData.result,
@@ -50,7 +50,7 @@ async function getAllModelsFromStorage() {
 
 async function getAllPredictions() {
     try {
-        const predictionsRef = firestore.collection('prediction');
+        const predictionsRef = firestore.collection('predictions');
         const snapshot = await predictionsRef.get();
         
         const predictions = [];
